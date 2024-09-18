@@ -2,8 +2,10 @@ import Page from '../components/Page';
 
 export default function IndexPage() {
   return (
-    <Page>
+    <>
       <p>hello! index page!</p>
-    </Page>
+      <code>var I am first child</code>
+      <p>I am second child</p>
+    </>
   );
 }
