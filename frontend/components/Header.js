@@ -39,10 +39,10 @@ export default function Header() {
         <Logo>
           <Link href="/">Gig-Tent</Link>
         </Logo>
-        <p>nav bar</p>
+        <p>nav bar - are you keeping this text in for a reason? :)</p>
       </div>
       <div className="sub-bar">
-        <p>searchbar</p>
+        <p>Search</p>
       </div>
       <Nav />
     </HeaderStyles>
