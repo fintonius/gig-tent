@@ -1,5 +1,10 @@
 import { config, createSchema } from '@keystone-next/keystone/schema';
 import 'dotenv/config';
+import { createAuth } from '@keystone-next/auth';
+import {
+  withItemData,
+  statelessSessions,
+} from '@keystone-next/keystone/session';
 import { User } from './schemas/User';
 
 const databaseURL = process.env.DATABASE_URL || 'mongodb://localhost/gig-tent';
@@ -11,26 +16,48 @@ const sessionConfig = {
   secret: process.env.COOKIE_SECRET,
 };
 
-export default config({
-  server: {
-    cors: {
-      origin: [process.env.FRONTEND_URL],
-      credentials: true,
-    },
+// authorise users to set up identity with permission
+// to access in sessions (added at end of page)
+const { withAuth } = createAuth({
+  listKey: 'User',
+  identityField: 'email',
+  secretField: 'password',
+  initFirstItem: {
+    fields: ['name', 'email', 'password'],
+    // TODO: add in initial roles here
   },
-  db: {
-    adapter: 'mongoose',
-    url: databaseURL,
-    // TODO: Add data seeding here
-  },
-  //
-  lists: createSchema({
-    // Schema items go in here
-    User,
-  }),
-  ui: {
-    // TODO: change this for roles
-    isAccessAllowed: () => true,
-  },
-  //   TODO: Add session values here
 });
+
+// WithAuth added here encapsulating main config so this can only
+// happen if user has been authorised
+export default withAuth(
+  config({
+    server: {
+      cors: {
+        origin: [process.env.FRONTEND_URL],
+        credentials: true,
+      },
+    },
+    db: {
+      adapter: 'mongoose',
+      url: databaseURL,
+      // TODO: Add data seeding here
+    },
+    //
+    lists: createSchema({
+      // Schema items go in here
+      User,
+    }),
+    ui: {
+      // show the UI only if the user passes this test
+      isAccessAllowed: ({ session }) => {
+        console.log(session);
+        return !!session?.data;
+      },
+    },
+    session: withItemData(statelessSessions(sessionConfig), {
+      // Graph QL - this will be expanded on later
+      User: 'id',
+    }),
+  })
+);
