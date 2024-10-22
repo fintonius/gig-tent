@@ -22,6 +22,7 @@ const GlobalStyles = createGlobalStyle`
     /* boxShadow */
     --bs: 0 12px 24px 0 rgba(0,0,0,0.09);
     box-sizing: border-box;
+    font-size: 62.5%;
   }
   *, *:before, *:after {
     /* this ensures when we add border and padding to an element it takes
