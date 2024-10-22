@@ -1,9 +1,2 @@
-export default function IndexPage() {
-  return (
-    <>
-      <p>hello! index page!</p>
-      <code>var I am first child</code>
-      <p>I am second child</p>
-    </>
-  );
-}
+// this is making the home page essentially copy the products page
+export { default } from './products';
