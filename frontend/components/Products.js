@@ -44,7 +44,6 @@ export default function Products() {
           <Product key={product.id} product={product} />
         ))}
       </ProductsListStyles>
-      >
     </div>
   );
 }
