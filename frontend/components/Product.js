@@ -20,7 +20,7 @@ export default function Product({ product }) {
       <div className="buttonlist">
         <Link
           href={{
-            pathname: 'update',
+            pathname: '/update', // added a / before update as was consoling an error
             query: {
               id: product.id,
             },
