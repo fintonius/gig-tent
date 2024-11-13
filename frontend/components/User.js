@@ -1,5 +1,8 @@
 import { gql, useQuery } from '@apollo/client';
 
+// this "autheticatedItem" returns something called a Union,
+// which can indicate lots of different expected objects,
+// so this needs to be formatted as below
 export const CURRENT_USER_QUERY = gql`
   query {
     authenticatedItem {
