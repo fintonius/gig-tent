@@ -9,6 +9,7 @@ import { User } from './schemas/User';
 import { Product } from './schemas/Product';
 import { ProductImage } from './schemas/ProductImage';
 import { insertSeedData } from './seed-data';
+import { sendPasswordResetEmail } from './lib/mail';
 
 const databaseURL = process.env.DATABASE_URL || 'mongodb://localhost/gig-tent';
 
@@ -28,6 +29,11 @@ const { withAuth } = createAuth({
   initFirstItem: {
     fields: ['name', 'email', 'password'],
     // TODO: add in initial roles here
+  },
+  passwordResetLink: {
+    async sendToken(args) {
+      await sendPasswordResetEmail(args.token, args.identity);
+    },
   },
 });
 
