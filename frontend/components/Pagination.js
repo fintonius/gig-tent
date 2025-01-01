@@ -23,7 +23,9 @@ export default function Pagination({ page }) {
   return (
     <PaginationStyles>
       <Head>
-        <title>Gig-Tent - Page {page} of __</title>
+        <title>
+          Gig-Tent - Page {page} of {pageCount}
+        </title>
       </Head>
 
       <Link href={`/products/${page - 1}`}>
